@@ -1,0 +1,71 @@
+{
+  "name": "a_codestyle",
+  "version": "1.0.0",
+  "description": "Code formatter to keep the same code style and preferencies",
+  "main": "a_codestyle.js",
+  "bin": "./a_codestyle.js",
+  "scripts": {
+    "commit": "git-cz",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "release": "semantic-release"
+  },
+  "homepage": "https://github.com/Alexgalinier/a_codestyle",
+  "keywords": [
+    "codestyle",
+    "formatter"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alexgalinier/a_codestyle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alexgalinier/a_codestyle/issues"
+  },
+  "author": "Alexgalinier",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "fs-extra": "^5.0.0",
+    "glob": "^7.1.2",
+    "prettier": "^1.11.1",
+    "stylus-supremacy": "^2.9.1"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^2.0.1",
+    "@semantic-release/git": "^4.0.1",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
+    "jest": "^22.4.2",
+    "json-stringify-pretty-compact": "^1.1.0",
+    "semantic-release": "^15.0.3"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.js"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "release": {
+    "verifyConditions": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ],
+    "publish": [
+      "@semantic-release/github",
+      "@semantic-release/npm"
+    ]
+  }
+}
