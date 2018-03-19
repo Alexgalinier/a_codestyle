@@ -11,7 +11,7 @@ node_js:
 branches:
   only:
     - master
-    - /cl/
+    - /^greenkeeper.*$/
 
 jobs:
   include:
