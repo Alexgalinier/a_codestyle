@@ -1,6 +1,6 @@
 {
   "name": "a_codestyle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Code formatter to keep the same code style and preferencies",
   "main": "a_codestyle.js",
   "bin": "./a_codestyle.js",

@@ -1,3 +1,11 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/Alexgalinier/a_codestyle/compare/v1.0.0...v1.0.1) (2018-03-20)
+
+
+### Bug Fixes
+
+* **dependency:** Move json-stringify-pretty-compact to "dependencies" block instead it won't be inst ([0921bcb](https://github.com/Alexgalinier/a_codestyle/commit/0921bcb))
+
 <a name="1.0.0"></a>
 # 1.0.0 (2018-03-20)
 
