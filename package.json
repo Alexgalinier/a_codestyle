@@ -11,24 +11,15 @@
     "release": "semantic-release"
   },
   "homepage": "https://github.com/Alexgalinier/a_codestyle",
-  "keywords": [
-    "codestyle",
-    "formatter"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alexgalinier/a_codestyle.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Alexgalinier/a_codestyle/issues"
-  },
+  "keywords": ["codestyle", "formatter"],
+  "repository": {"type": "git", "url": "https://github.com/Alexgalinier/a_codestyle.git"},
+  "bugs": {"url": "https://github.com/Alexgalinier/a_codestyle/issues"},
   "author": "Alexgalinier",
   "license": "MIT",
-  "engines": {
-    "node": ">=8"
-  },
+  "engines": {"node": ">=8"},
   "dependencies": {
     "chalk": "^2.3.2",
+    "command-exists": "^1.2.2",
     "commander": "^2.15.1",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.2",
@@ -44,31 +35,15 @@
     "jest": "^22.4.2",
     "semantic-release": "^15.0.3"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "**/*.js",
-      "!test/**"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
+  "jest": {"collectCoverageFrom": ["**/*.js", "!test/**"]},
+  "config": {"commitizen": {"path": "./node_modules/cz-conventional-changelog"}},
   "release": {
     "verifyConditions": [
       "@semantic-release/changelog",
       "@semantic-release/npm",
       "@semantic-release/git"
     ],
-    "prepare": [
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      "@semantic-release/git"
-    ],
-    "publish": [
-      "@semantic-release/github",
-      "@semantic-release/npm"
-    ]
+    "prepare": ["@semantic-release/changelog", "@semantic-release/npm", "@semantic-release/git"],
+    "publish": ["@semantic-release/github", "@semantic-release/npm"]
   }
 }
