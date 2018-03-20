@@ -1,3 +1,11 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/Alexgalinier/a_codestyle/compare/v1.0.1...v1.1.0) (2018-03-20)
+
+
+### Features
+
+* **ignore-path:** Ignore path option in CLI to choose what to format ([f192084](https://github.com/Alexgalinier/a_codestyle/commit/f192084))
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/Alexgalinier/a_codestyle/compare/v1.0.0...v1.0.1) (2018-03-20)
 
