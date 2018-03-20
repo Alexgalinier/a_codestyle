@@ -6,15 +6,17 @@ const DEFAULT_OPTIONS = {
   stdio: ['inherit', 'inherit', 'inherit'],
 };
 
-module.exports = (command, args, options) => {
+module.exports = (command, args = '', options = {}) => {
   return new Promise(async (res, rej) => {
     try {
-      await commandExists(command);
+      const res = await commandExists(command);
     } catch (e) {
-      command = `node_modules/.bin/${command}`;
-      if (!await fs.pathExists(command)) {
-        throw new Error(`Command "${command}" is not available directly or in ./node_modules/.bin/`);
+      const nodeModulesCommand = `node_modules/.bin/${command}`;
+      if (!await fs.pathExists(nodeModulesCommand)) {
+        rej(new Error(`Command "${command}" is not available directly or in ./node_modules/.bin/`));
+        return;
       }
+      command = nodeModulesCommand;
     }
 
     const cmd = spawn(command, args.split(' '), Object.assign({}, DEFAULT_OPTIONS, options));
