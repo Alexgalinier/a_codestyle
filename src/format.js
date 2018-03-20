@@ -5,27 +5,37 @@ const { start, end } = require('./../shared/terminal');
 
 const CONFIG = path.join(__dirname, '..', 'config');
 
-module.exports = async (src = '.') => {
+module.exports = async (src, ignorePath) => {
+  ignorePath = ignorePath ? `!(node_modules|${ignorePath.replace(',', '|')})/` : '!(node_modules)/';
+
   start('Prettier', true);
   try {
     await spawnP(
-      __dirname + '/../node_modules/.bin/prettier',
-      `--config ${path.join(CONFIG, 'prettierCodestyle.json')} --write ${src}/**/*.js`
+      'prettier',
+      `--config ${path.join(CONFIG, 'prettierCodestyle.json')} --write ${src}/{${ignorePath}**/*.js,*.js}`
     );
   } catch (e) {
     // Error 2 means no file found, which should not fail the process
-    if (e !== 2) process.exit(e);
+    if (e !== 2) {
+      if (typeof e === 'Object') console.log(e.message);
+      process.exit(1);
+    }
   }
   end();
 
   start('Stylus supremacy');
-  await spawnP(
-    __dirname + '/../node_modules/.bin/stylus-supremacy',
-    `format ${src}/{!(node_modules)/**/*.styl,*.styl} --replace --options ${path.join(CONFIG, 'stylusCodestyle.json')}`
-  );
+  try {
+    await spawnP(
+      'stylus-supremacy',
+      `format ${src}/{${ignorePath}**/*.styl,*.styl} --replace --options ${path.join(CONFIG, 'stylusCodestyle.json')}`
+    );
+  } catch (e) {
+    if (typeof e === 'Object') console.log(e.message);
+    process.exit(1);
+  }
   end();
 
   start('Json pretty compact');
-  await jsonPrettyCompactP(`${src}/{!(node_modules)/**/*.json,*.json}`, path.join(CONFIG, 'jsonCodestyle.json'));
+  await jsonPrettyCompactP(`${src}/{${ignorePath}**/*.json,*.json}`, path.join(CONFIG, 'jsonCodestyle.json'));
   end();
 };

@@ -24,7 +24,7 @@ module.exports = async (src, optionsFile) => {
         const formattedJson = jsonFormatter(JSON.parse(fileContent), options);
         await fs.writeFile(_, formattedJson);
         console.log(`${_.replace('./', '')} ${benchmark(process.hrtime(time))}ms`);
-      } catch(e) {
+      } catch (e) {
         console.log(`${_.replace('./', '')}`);
         console.error(`[${chalk.red('error')}] ${e.message}`);
       }
