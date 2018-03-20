@@ -1,0 +1,1 @@
+const error = a,b => new Error('Wrong code');

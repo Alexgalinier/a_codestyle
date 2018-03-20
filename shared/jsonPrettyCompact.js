@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const jsonFormatter = require('json-stringify-pretty-compact');
+const chalk = require('chalk');
 const globP = require('./globP');
 
 function benchmark(diff) {
@@ -19,9 +20,14 @@ module.exports = async (src, optionsFile) => {
     files.map(async _ => {
       const time = process.hrtime();
       const fileContent = await fs.readFile(_, 'utf8');
-      const formattedJson = jsonFormatter(JSON.parse(fileContent), options);
-      await fs.writeFile(_, formattedJson);
-      console.log(`${_.replace('./', '')} ${benchmark(process.hrtime(time))}ms`);
+      try {
+        const formattedJson = jsonFormatter(JSON.parse(fileContent), options);
+        await fs.writeFile(_, formattedJson);
+        console.log(`${_.replace('./', '')} ${benchmark(process.hrtime(time))}ms`);
+      } catch(e) {
+        console.log(`${_.replace('./', '')}`);
+        console.error(`[${chalk.red('error')}] ${e.message}`);
+      }
     })
   );
 };

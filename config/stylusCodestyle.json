@@ -8,5 +8,6 @@
   "stylusSupremacy.alwaysUseNot": true,
   "stylusSupremacy.alwaysUseNoneOverZero": true,
   "stylusSupremacy.alwaysUseZeroWithoutUnit": true,
-  "stylusSupremacy.reduceMarginAndPaddingValues": true
+  "stylusSupremacy.reduceMarginAndPaddingValues": true,
+  "stylusSupremacy.tabStopChar": "  "
 }
