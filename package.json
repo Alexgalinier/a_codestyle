@@ -5,10 +5,16 @@
   "main": "a_codestyle.js",
   "bin": "./a_codestyle.js",
   "scripts": {
+    "pretty": "node a_codestyle.js -i test,coverage",
     "commit": "git-cz",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "release": "semantic-release"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pretty"
+    }
   },
   "homepage": "https://github.com/Alexgalinier/a_codestyle",
   "keywords": [
@@ -42,6 +48,7 @@
     "@semantic-release/git": "^4.0.1",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.15.0-rc.9",
     "jest": "^22.4.2",
     "semantic-release": "^15.0.3"
   },

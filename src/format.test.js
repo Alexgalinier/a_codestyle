@@ -9,6 +9,7 @@ const TEST_EXPECTED = TEST + 'expected/';
 const TMP = __dirname + '/../tmp/';
 const TMP_ERROR = TMP + 'error/';
 const TMP_IGNORE = TMP + 'ignore/';
+const TMP_EMPTY = TMP + 'empty/';
 
 beforeEach(async () => {
   await fs.copy(TEST_BASE, TMP);
@@ -41,4 +42,8 @@ test('Ignored files are not changed', async () => {
   await compareFiles(TMP_IGNORE + 'ignore.js', TEST_BASE_IGNORE + 'ignore.js');
   await compareFiles(TMP_IGNORE + 'ignore.json', TEST_BASE_IGNORE + 'ignore.json');
   await compareFiles(TMP_IGNORE + 'ignore.styl', TEST_BASE_IGNORE + 'ignore.styl');
+});
+
+test('Empty folder', async () => {
+  await format(TMP_EMPTY);
 });
