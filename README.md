@@ -1,5 +1,7 @@
 # a_codestyle
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Alexgalinier/a_codestyle.svg)](https://greenkeeper.io/)
+
 Code formatter to keep the same code style and preferencies
 
 ## Installation
