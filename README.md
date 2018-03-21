@@ -18,4 +18,4 @@ In your package.json scripts
 ```
 "pretty": "a_codestyle",
 ```
-This will find all `{.js, .json, .styl}` in your project root directory and subdirectories (execpt files in node_modules) to reformat them. 
+This will find all `{.js, .json, .styl}` files in your project root directory and subdirectories (except files in node_modules) to reformat them.
