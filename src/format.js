@@ -68,7 +68,7 @@ module.exports = async (src, ignorePath) => {
             throw new Error(`No formatter for ${path.extname(_)} files`);
         }
         await fs.writeFile(_, formatted);
-        console.log(`${_.replace('./', '')} ${benchmark(process.hrtime(time))}ms`);
+        console.log(`${_.replace('./', '')} ${chalk.grey(benchmark(process.hrtime(time)) + 'ms')}`);
       } catch (e) {
         console.log(`${_.replace('./', '')}`);
         console.error(`[${chalk.red('error')}] ${e.message}`);
