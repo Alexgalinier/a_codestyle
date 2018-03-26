@@ -39,6 +39,9 @@ test('Error files are not changed', async () => {
 
 test('Ignored files are not changed', async () => {
   await format(TMP, 'ignore');
+  await compareFiles(TMP + 'base.js', TEST_EXPECTED + 'base.js');
+  await compareFiles(TMP + 'base.json', TEST_EXPECTED + 'base.json');
+  await compareFiles(TMP + 'base1.styl', TEST_EXPECTED + 'base1.styl');
   await compareFiles(TMP_IGNORE + 'ignore.js', TEST_BASE_IGNORE + 'ignore.js');
   await compareFiles(TMP_IGNORE + 'ignore.json', TEST_BASE_IGNORE + 'ignore.json');
   await compareFiles(TMP_IGNORE + 'ignore.styl', TEST_BASE_IGNORE + 'ignore.styl');
