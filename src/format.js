@@ -1,41 +1,78 @@
 const path = require('path');
-const spawnP = require('./../shared/spanwP');
-const jsonPrettyCompactP = require('../shared/jsonPrettyCompact');
-const { start, end } = require('./../shared/terminal');
+const chalk = require('chalk');
+const fs = require('fs-extra');
+const globP = require('./../shared/globP');
+const formatJs = require('./formatter/javascript');
+const formatJson = require('./formatter/json');
+const formatStyl = require('./formatter/stylus');
 
 const CONFIG = path.join(__dirname, '..', 'config');
+const TO_IGNORE = ['package.json', 'package-lock.json'];
+
+function formatPath(path) {
+  if (path.substr(0, 1) !== '/' && path.substr(0, 1) !== '.' && path.substr(0, 2) !== './') {
+    path = './' + path;
+  }
+
+  if (path.slice(-1) !== '/') {
+    path = path + '/';
+  }
+
+  return path;
+}
+
+function formatIgnore(values = []) {
+  TO_IGNORE.forEach(ignored => {
+    if (!values.find(_ => _ === ignored)) values.push(ignored);
+  });
+  return '.*' + values.map(_ => _.replace('.', '\\.')).join('.*|.*') + '.*';
+}
+
+function benchmark(diff) {
+  return Math.round((diff[0] * 1e9 + diff[1]) / 1e6);
+}
 
 module.exports = async (src, ignorePath) => {
-  ignorePath = ignorePath ? `!(node_modules|${ignorePath.replace(',', '|')})/` : '!(node_modules)/';
+  src = formatPath(src);
 
-  start('Prettier', true);
-  try {
-    await spawnP(
-      'prettier',
-      `--config ${path.join(CONFIG, 'prettierCodestyle.json')} --write ${src}/{${ignorePath}**/*.js,*.js}`
-    );
-  } catch (e) {
-    // Error 2 means no file found, which should not fail the process
-    if (e !== 2) {
-      if (typeof e === 'Object') console.log(e.message);
-      process.exit(1);
-    }
+  let files = await globP(`${src}{,!(node_modules)/**}/*.{js,json,styl}`);
+
+  if (ignorePath) {
+    ignorePath = formatIgnore(ignorePath.split(','));
+    files = files.filter(_ => _.match(ignorePath) == null);
   }
-  end();
 
-  start('Stylus supremacy');
-  try {
-    await spawnP(
-      'stylus-supremacy',
-      `format ${src}/{${ignorePath}**/*.styl,*.styl} --replace --options ${path.join(CONFIG, 'stylusCodestyle.json')}`
-    );
-  } catch (e) {
-    if (typeof e === 'Object') console.log(e.message);
-    process.exit(1);
+  if (files.length === 0) {
+    console.log('No matching files.');
+    return;
   }
-  end();
 
-  start('Json pretty compact');
-  await jsonPrettyCompactP(`${src}/{${ignorePath}**/*.json,*.json}`, path.join(CONFIG, 'jsonCodestyle.json'));
-  end();
+  await Promise.all(
+    files.map(async _ => {
+      const time = process.hrtime();
+
+      const fileContent = await fs.readFile(_, 'utf8');
+      try {
+        let formatted;
+        switch (path.extname(_)) {
+          case '.js':
+            formatted = formatJs(fileContent, require(`${CONFIG}/prettierCodestyle.json`));
+            break;
+          case '.json':
+            formatted = formatJson(fileContent, require(`${CONFIG}/jsonCodestyle`));
+            break;
+          case '.styl':
+            formatted = formatStyl(fileContent, require(`${CONFIG}/stylusCodestyle`));
+            break;
+          default:
+            throw new Error(`No formatter for ${path.extname(_)} files`);
+        }
+        await fs.writeFile(_, formatted);
+        console.log(`${_.replace('./', '')} ${benchmark(process.hrtime(time))}ms`);
+      } catch (e) {
+        console.log(`${_.replace('./', '')}`);
+        console.error(`[${chalk.red('error')}] ${e.message}`);
+      }
+    })
+  );
 };
