@@ -1,3 +1,16 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/Alexgalinier/a_codestyle/compare/v2.0.0...v3.0.0) (2018-03-26)
+
+
+### Features
+
+* **format:** Use only one file reader ([4a7fddd](https://github.com/Alexgalinier/a_codestyle/commit/4a7fddd))
+
+
+### BREAKING CHANGES
+
+* **format:** Terminal display will now be homogenous
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/Alexgalinier/a_codestyle/compare/v1.1.0...v2.0.0) (2018-03-20)
 
