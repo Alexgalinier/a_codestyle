@@ -1,3 +1,11 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/Alexgalinier/a_codestyle/compare/v3.0.0...v3.0.1) (2018-03-27)
+
+
+### Bug Fixes
+
+* **ignore path:** Should always filter for ignorePath because package*.json are added by default ([d3fc199](https://github.com/Alexgalinier/a_codestyle/commit/d3fc199))
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/Alexgalinier/a_codestyle/compare/v2.0.0...v3.0.0) (2018-03-26)
 
