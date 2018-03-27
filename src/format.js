@@ -38,9 +38,11 @@ module.exports = async (src, ignorePath) => {
   let files = await globP(`${src}{,!(node_modules)/**}/*.{js,json,styl}`);
 
   if (ignorePath) {
-    ignorePath = formatIgnore(ignorePath.split(','));
-    files = files.filter(_ => _.match(ignorePath) == null);
+    ignorePath = ignorePath.split(',');
   }
+
+  const ignoreRegexp = formatIgnore(ignorePath);
+  files = files.filter(_ => _.match(ignoreRegexp) == null);
 
   if (files.length === 0) {
     console.log('No matching files.');
